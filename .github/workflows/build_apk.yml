@@ -1,0 +1,22 @@
+name: Build APK Gila
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instal Kebutuhan
+        run: |
+          sudo apt update
+          sudo apt install -y python3-pip
+          pip install buildozer cython
+      - name: Build APK
+        run: |
+          yes | buildozer android debug
+      - name: Ambil Hasilnya
+        uses: actions/upload-artifact@v4
+        with:
+          name: Hasil-APK
+          path: bin/*.apk
+
